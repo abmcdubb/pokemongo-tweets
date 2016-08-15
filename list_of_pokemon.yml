@@ -1,302 +1,302 @@
 Bulbasaur:
-  Number: 001
+  Number: '001'
 Ivysaur:
-  Number: 002
+  Number: '002'
 Venusaur:
-  Number: 003
+  Number: '003'
 Charmander:
-  Number: 004
+  Number: '004'
 Charmeleon:
-  Number: 005
+  Number: '005'
 Charizard:
-  Number: 006
+  Number: '006'
 Squirtle:
-  Number: 007
+  Number: '007'
 Wartortle:
-  Number: 008
+  Number: '008'
 Blastoise:
-  Number: 009
+  Number: '009'
 Caterpie:
-  Number: 010
+  Number: '010'
 Metapod:
-  Number: 011
+  Number: '011'
 Butterfree:
-  Number: 012
+  Number: '012'
 Weedle:
-  Number: 013
+  Number: '013'
 Kakuna:
-  Number: 014
+  Number: '014'
 Beedrill:
-  Number: 015
+  Number: '015'
 Pidgey:
-  Number: 016
+  Number: '016'
 Pidgeotto:
-  Number: 017
+  Number: '017'
 Pidgeot:
-  Number: 018
+  Number: '018'
 Rattata:
-  Number: 019
+  Number: '019'
 Raticate:
-  Number: 020
+  Number: '020'
 Spearow:
-  Number: 021
+  Number: '021'
 Fearow:
-  Number: 022
+  Number: '022'
 Ekans:
-  Number: 023
+  Number: '023'
 Arbok:
-  Number: 024
+  Number: '024'
 Pikachu:
-  Number: 025
+  Number: '025'
 Raichu:
-  Number: 026
+  Number: '026'
 Sandshrew:
-  Number: 027
+  Number: '027'
 Sandslash:
-  Number: 028
+  Number: '028'
 Nidoran♀:
-  Number: 029
+  Number: '029'
 Nidorina:
-  Number: 030
+  Number: '030'
 Nidoqueen:
-  Number: 031
+  Number: '031'
 Nidoran♂:
-  Number: 032
+  Number: '032'
 Nidorino:
-  Number: 033
+  Number: '033'
 Nidoking:
-  Number: 034
+  Number: '034'
 Clefairy:
-  Number: 035
+  Number: '035'
 Clefable:
-  Number: 036
+  Number: '036'
 Vulpix:
-  Number: 037
+  Number: '037'
 Ninetales:
-  Number: 038
+  Number: '038'
 Jigglypuff:
-  Number: 039
+  Number: '039'
 Wigglytuff:
-  Number: 040
+  Number: '040'
 Zubat:
-  Number: 041
+  Number: '041'
 Golbat:
-  Number: 042
+  Number: '042'
 Oddish:
-  Number: 043
+  Number: '043'
 Gloom:
-  Number: 044
+  Number: '044'
 Vileplume:
-  Number: 045
+  Number: '045'
 Paras:
-  Number: 046
+  Number: '046'
 Parasect:
-  Number: 047
+  Number: '047'
 Venonat:
-  Number: 048
+  Number: '048'
 Venomoth:
-  Number: 049
+  Number: '049'
 Diglett:
-  Number: 050
+  Number: '050'
 Dugtrio:
-  Number: 051
+  Number: '051'
 Meowth:
-  Number: 052
+  Number: '052'
 Persian:
-  Number: 053
+  Number: '053'
 Psyduck:
-  Number: 054
+  Number: '054'
 Golduck:
-  Number: 055
+  Number: '055'
 Mankey:
-  Number: 056
+  Number: '056'
 Primeape:
-  Number: 057
+  Number: '057'
 Growlithe:
-  Number: 058
+  Number: '058'
 Arcanine:
-  Number: 059
+  Number: '059'
 Poliwag:
-  Number: 060
+  Number: '060'
 Poliwhirl:
-  Number: 061
+  Number: '061'
 Poliwrath:
-  Number: 062
+  Number: '062'
 Abra:
-  Number: 063
+  Number: '063'
 Kadabra:
-  Number: 064
+  Number: '064'
 Alakazam:
-  Number: 065
+  Number: '065'
 Machop:
-  Number: 066
+  Number: '066'
 Machoke:
-  Number: 067
+  Number: '067'
 Machamp:
-  Number: 068
+  Number: '068'
 Bellsprout:
-  Number: 069
+  Number: '069'
 Weepinbell:
-  Number: 070
+  Number: '070'
 Victreebel:
-  Number: 071
+  Number: '071'
 Tentacool:
-  Number: 072
+  Number: '072'
 Tentacruel:
-  Number: 073
+  Number: '073'
 Geodude:
-  Number: 074
+  Number: '074'
 Graveler:
-  Number: 075
+  Number: '075'
 Golem:
-  Number: 076
+  Number: '076'
 Ponyta:
-  Number: 077
+  Number: '077'
 Rapidash:
-  Number: 078
+  Number: '078'
 Slowpoke:
-  Number: 079
+  Number: '079'
 Slowbro:
-  Number: 080
+  Number: '080'
 Magnemite:
-  Number: 081
+  Number: '081'
 Magneton:
-  Number: 082
+  Number: '082'
 Farfetch'd:
-  Number: 083
+  Number: '083'
 Doduo:
-  Number: 084
+  Number: '084'
 Dodrio:
-  Number: 085
+  Number: '085'
 Seel:
-  Number: 086
+  Number: '086'
 Dewgong:
-  Number: 087
+  Number: '087'
 Grimer:
-  Number: 088
+  Number: '088'
 Muk:
-  Number: 089
+  Number: '089'
 Shellder:
-  Number: 090
+  Number: '090'
 Cloyster:
-  Number: 091
+  Number: '091'
 Gastly:
-  Number: 092
+  Number: '092'
 Haunter:
-  Number: 093
+  Number: '093'
 Gengar:
-  Number: 094
+  Number: '094'
 Onix:
-  Number: 095
+  Number: '095'
 Drowzee:
-  Number: 096
+  Number: '096'
 Hypno:
-  Number: 097
+  Number: '097'
 Krabby:
-  Number: 098
+  Number: '098'
 Kingler:
-  Number: 099
+  Number: '099'
 Voltorb:
-  Number: 100
+  Number: '100'
 Electrode:
-  Number: 101
+  Number: '101'
 Exeggcute:
-  Number: 102
+  Number: '102'
 Exeggutor:
-  Number: 103
+  Number: '103'
 Cubone:
-  Number: 104
+  Number: '104'
 Marowak:
-  Number: 105
+  Number: '105'
 Hitmonlee:
-  Number: 106
+  Number: '106'
 Hitmonchan:
-  Number: 107
+  Number: '107'
 Lickitung:
-  Number: 108
+  Number: '108'
 Koffing:
-  Number: 109
+  Number: '109'
 Weezing:
-  Number: 110
+  Number: '110'
 Rhyhorn:
-  Number: 111
+  Number: '111'
 Rhydon:
-  Number: 112
+  Number: '112'
 Chansey:
-  Number: 113
+  Number: '113'
 Tangela:
-  Number: 114
+  Number: '114'
 Kangaskhan:
-  Number: 115
+  Number: '115'
 Horsea:
-  Number: 116
+  Number: '116'
 Seadra:
-  Number: 117
+  Number: '117'
 Goldeen:
-  Number: 118
+  Number: '118'
 Seaking:
-  Number: 119
+  Number: '119'
 Staryu:
-  Number: 120
+  Number: '120'
 Starmie:
-  Number: 121
+  Number: '121'
 Mr. Mime:
-  Number: 122
+  Number: '122'
 Scyther:
-  Number: 123
+  Number: '123'
 Jynx:
-  Number: 124
+  Number: '124'
 Electabuzz:
-  Number: 125
+  Number: '125'
 Magmar:
-  Number: 126
+  Number: '126'
 Pinsir:
-  Number: 127
+  Number: '127'
 Tauros:
-  Number: 128
+  Number: '128'
 Magikarp:
-  Number: 129
+  Number: '129'
 Gyarados:
-  Number: 130
+  Number: '130'
 Lapras:
-  Number: 131
+  Number: '131'
 Ditto:
-  Number: 132
+  Number: '132'
 Eevee:
-  Number: 133
+  Number: '133'
 Vaporeon:
-  Number: 134
+  Number: '134'
 Jolteon:
-  Number: 135
+  Number: '135'
 Flareon:
-  Number: 136
+  Number: '136'
 Porygon:
-  Number: 137
+  Number: '137'
 Omanyte:
-  Number: 138
+  Number: '138'
 Omastar:
-  Number: 139
+  Number: '139'
 Kabuto:
-  Number: 140
+  Number: '140'
 Kabutops:
-  Number: 141
+  Number: '141'
 Aerodactyl:
-  Number: 142
+  Number: '142'
 Snorlax:
-  Number: 143
+  Number: '143'
 Articuno:
-  Number: 144
+  Number: '144'
 Zapdos:
-  Number: 145
+  Number: '145'
 Moltres:
-  Number: 146
+  Number: '146'
 Dratini:
-  Number: 147
+  Number: '147'
 Dragonair:
-  Number: 148
+  Number: '148'
 Dragonite:
-  Number: 149
+  Number: '149'
 Mewtwo:
-  Number: 150
+  Number: '150'
 Mew:
-  Number: 151
+  Number: '151'
