@@ -1,0 +1,4 @@
+notes.txt
+- add selectize to choose pokemon
+- hover tweet to see pokemon, vice versa
+- remove tweets, as other get added
