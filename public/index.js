@@ -5,13 +5,13 @@ var fullPokemonGridsBoxes = []
 document.addEventListener("DOMContentLoaded", function(event) {
   createGrid()
 
-  $('.choose-pokemon').selectize({maxItems: null})
+  $('.choose-pokemon').selectize({maxItems: null});
 
   source.onmessage = function(event) {
     console.log(event.data);
     data = JSON.parse(event.data);
 
-    showPokemon(data)
+    showPokemon(data);
   };
 
 })
@@ -24,7 +24,7 @@ function createGrid() {
 
   columns = Math.floor(width / 100);
   // rows = Math.floor(height / 150);
-  rows = 1
+  rows = 6
 
   for (var r = 0; r < rows; r++ ) {
     parentDiv = document.createElement('div');

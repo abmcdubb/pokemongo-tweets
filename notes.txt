@@ -2,3 +2,4 @@ notes.txt
 - add selectize to choose pokemon
 - hover tweet to see pokemon, vice versa
 - remove tweets, as other get added
+- fix json error for u {} messages and other, and multiple pokemon

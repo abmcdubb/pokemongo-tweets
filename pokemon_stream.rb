@@ -6,10 +6,8 @@ require 'pry'
 
 set :server, 'thin'
 connections = []
-tracked_terms = ['Pikachu', 'Bulbasaur', 'Krabby', 'Snorlax', 'Porygon', 'Voltorb', 'Vaporeon', 'Jolteon', 'Jynx', 'Scyther', 'Growlithe', 'Graveler']
 
-all_pokemon = YAML.load_file('list_of_pokemon.yml').keys
-
+all_pokemon = YAML.load_file('list_of_pokemon.yml')
 twitter_config = YAML.load_file('config.yml')['twitter']
 
 TweetStream.configure do |config|
@@ -21,13 +19,13 @@ TweetStream.configure do |config|
 end
 
 get '/' do
-  # start_stream(all_pokemon)
-  @pokemon = all_pokemon
+  @pokemon = all_pokemon.keys
   haml :index
 end
 
-get '/tweets', provides: 'text/event-stream' do
-  # start_stream(all_pokemon)
+get '/tweets' do
+  content_type 'text/event-stream'
+  
   stream :keep_open do |out|
     connections << out
     out.callback { connections.delete(out) }
@@ -46,10 +44,10 @@ def stream_message(tweet, terms)
   end
 end
 
-def pokemon_info(pokemon)
-  all_pokemon = YAML.load_file('list_of_pokemon.yml')
-  
-  "\"#{pokemon}\":\"https://assets.pokemon.com/assets/cms2/img/pokedex/detail/#{all_pokemon[pokemon]['Number']}.png\""
+def pokemon_info(pokemon)  
+  pokemon_list = YAML.load_file('list_of_pokemon.yml')
+
+  "\"#{pokemon}\":\"https://assets.pokemon.com/assets/cms2/img/pokedex/detail/#{pokemon_list[pokemon]['Number']}.png\""
 end
 
 def matched_pokemons(text, terms)
@@ -57,8 +55,10 @@ def matched_pokemons(text, terms)
 end
 
 EM.schedule do
+  tracked_terms = all_pokemon.keys.sample(10)
+
   TweetStream::Client.new.track(*tracked_terms) do |tweet|
-    connections.each do |out| 
+    connections.each do |out|
       if !tweet.retweet? && tweet.lang == 'en'
         out << stream_message(tweet, tracked_terms)
       end
@@ -66,14 +66,4 @@ EM.schedule do
   end
 end
 
-def start_stream(tracked_terms)
-  EM.schedule do
-    TweetStream::Client.new.track(*tracked_terms) do |tweet|
-      connections.each do |out| 
-        if !tweet.retweet? && tweet.lang == 'en'
-          out << stream_message(tweet, tracked_terms)
-        end
-      end
-    end
-  end
-end
+# twitter_client.track.options[:params][:track]

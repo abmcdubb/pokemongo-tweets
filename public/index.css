@@ -30,11 +30,13 @@ body {
   font-size: 52px;
   font-family: 'Bangers', cursive;
   display: inline-block;
+  /*width: 30%;*/
 }
 #search {
   display: inline-block;
   float: right;
-  max-width: 500px;
+  /*width: 65%;*/
+  margin-left: 20px;
 }
 .pokemongo-nav, .tweets-nav {
   display: inline-block;

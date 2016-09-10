@@ -1,29 +1,27 @@
 !!! 5
 %html
-  %script{type: "text/javascript", src: "index.js"}
-  %script{type: "text/javascript", src: "https://cdnjs.cloudflare.com/ajax/libs/randomcolor/0.4.4/randomColor.js"}
-  %script{type: "text/javascript", src: "https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"}
-  %script{type: "text/javascript", src: "https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.3/js/standalone/selectize.min.js"}
   %link{rel: "stylesheet", type: "text/css", href: "https://fonts.googleapis.com/css?family=Bangers"}
   %link{rel: "stylesheet", type: "text/css", href: "https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css"}
   %link{rel: "stylesheet", type: "text/css", href: "https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.3/css/selectize.min.css"}
   %link{rel: "stylesheet", type: "text/css", href: "index.css"} 
+  %script{type: "text/javascript", src: "https://cdnjs.cloudflare.com/ajax/libs/randomcolor/0.4.4/randomColor.js"}
+  %script{type: "text/javascript", src: "https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"}
+  %script{type: "text/javascript", src: "https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.3/js/standalone/selectize.min.js"}
+  %script{type: "text/javascript", src: "index.js"}
+
   %title
   %body
     .nav
       #logo
         .pokemongo-nav
-          PokemonGo
-        .tweets-nav
-          Tweets
+          Pokemon Go #Tweets
       #search
-        %form{action: "/", method: "get"}
+        %form{action: "/tweets", method: "get"}
           %select{:name => 'pokemon[]',  class: 'choose-pokemon', multiple: true}
-            - @pokemon.each do |pokemon|
-              %option{ value: pokemon }= pokemon
+            - @pokemon.each do |p|
+              %option{ value: p }= p
 
           %input{ type:"submit", name: "submit", value: "search" }
-
       %hr
     #pokeballs 
     #sidebar
