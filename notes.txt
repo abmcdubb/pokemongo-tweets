@@ -1,5 +1,12 @@
-notes.txt
-- add selectize to choose pokemon
+TODO:
+#- add selectize to choose pokemon
 - hover tweet to see pokemon, vice versa
-- remove tweets, as other get added
+#- remove tweets, as other get added
 - fix json error for u {} messages and other, and multiple pokemon
+- maybe this javascript can live as a class
+#- prevent everything from showing twice
+- select filtered image
+- changing color theme
+- add params to url
+- loading screen
+- disconnect message

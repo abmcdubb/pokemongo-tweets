@@ -30,12 +30,12 @@ body {
   font-size: 52px;
   font-family: 'Bangers', cursive;
   display: inline-block;
-  /*width: 30%;*/
+  width: 30%;
 }
 #search {
   display: inline-block;
   float: right;
-  /*width: 65%;*/
+  width: 65%;
   margin-left: 20px;
 }
 .pokemongo-nav, .tweets-nav {
@@ -66,4 +66,18 @@ p.tweet-text {
   padding: 5px;
   border-bottom: 2px solid black;
   font-family: 'Bangers', cursive;
+}
+
+.selectize-control.choose-pokemon {
+  font-family: 'Oswald', sans-serif;
+}
+
+.selectize-input.items>div.item {
+  font-family: 'Oswald', sans-serif;
+  border-radius: 5px;
+  font-weight: 200;
+  font-size: 13px;
+  font-style: thin;
+  color: white;
+  background-color: black;
 }

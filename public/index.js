@@ -1,20 +1,41 @@
 var source = new EventSource('/tweets');
 var fullPokemonGridsBoxes = []
-// var totalGridBoxes = 0
+var selectedPokemon = []
 
 document.addEventListener("DOMContentLoaded", function(event) {
   createGrid()
-
-  $('.choose-pokemon').selectize({maxItems: null});
+  $('.choose-pokemon').selectize({maxItems: 40});
+  
+  $( ".selectize-input").focusout(function() { 
+    getFormInput()  
+  })
 
   source.onmessage = function(event) {
     console.log(event.data);
     data = JSON.parse(event.data);
 
-    showPokemon(data);
+    if (fullPokemonGridsBoxes.indexOf(data.id) == -1 && pokemonShow(data)) {
+      showPokemon(data);
+    }
   };
 
 })
+
+function pokemonShow(tweet) {
+  if (selectedPokemon.length == 0) {
+    return true
+  }
+  else  {
+    result = containsAny(Object.keys(tweet.pokemons))
+    console.log(result)
+    return result.length > 0
+  }
+}
+
+function containsAny(tweetedPokemons) {
+  var result = tweetedPokemons.filter(function(item){ return selectedPokemon.indexOf(item) > -1});   
+  return result
+}
 
 function createGrid() {
   var pokeballsContainer = document.querySelector('#pokeballs')
@@ -51,6 +72,14 @@ function createGrid() {
   totalGridBoxes = rows * columns
 }
 
+function getFormInput() {
+  inputItems = $('.item') //be more specific
+    for(i = 0; i < inputItems.length ; i++) {
+      selectedPokemon.push($(inputItems[i]).data('value'))
+    }
+  console.log(selectedPokemon)
+}
+
 function showPokemon(tweet) {
   emptyGrids = document.getElementsByClassName('gridbox empty');
 
@@ -67,7 +96,7 @@ function showPokemon(tweet) {
 
     addToLeaderboard(tweet, randomColor);
 
-    if (emptyGrids.length <= 2) {
+    if (emptyGrids.length <= 1) {
       removePokemon()
     }
   }
@@ -121,8 +150,8 @@ function createPokeball(tweet, color) {
 }
 
 function getImage(tweet) {
-  var firstKey = Object.keys(tweet.pokemons);
-  var imageSrc = tweet.pokemons[firstKey];
+  var key = Object.keys(tweet.pokemons)[0];
+  var imageSrc = tweet.pokemons[key];
 
   image = document.createElement('img');
   image.className = 'pokemon-image' + ' ' + tweet.id;

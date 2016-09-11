@@ -19,14 +19,24 @@ TweetStream.configure do |config|
 end
 
 get '/' do
-  @pokemon = all_pokemon.keys
+  @pokemon = all_pokemon.keys.sort
   haml :index
 end
 
 get '/tweets' do
   content_type 'text/event-stream'
-  
+
   stream :keep_open do |out|
+    tracked_terms = all_pokemon.keys
+
+    TweetStream::Client.new.track(*tracked_terms) do |tweet, client|
+      connections.each do |conn|
+        if !tweet.retweet? && tweet.lang == 'en'
+          conn << stream_message(tweet, tracked_terms)
+        end
+      end
+    end  
+
     connections << out
     out.callback { connections.delete(out) }
   end
@@ -38,7 +48,10 @@ def stream_message(tweet, terms)
   if pokemons.any?
     message = "data:{\"id\":\"tweetId#{tweet.id}\",\"message\":#{tweet.text.inspect},\"user\":\"#{tweet.user.name}\""
     message += ",\"pokemons\":{"
-    pokemons.each { |pokemon| message += pokemon_info(pokemon) }
+    pokemons.each_with_index do |pokemon, i|    
+      message += pokemon_info(pokemon)
+      message += "," if i < pokemons.count - 1
+    end
     message += "}}\n\n"
     message
   end
@@ -47,23 +60,9 @@ end
 def pokemon_info(pokemon)  
   pokemon_list = YAML.load_file('list_of_pokemon.yml')
 
-  "\"#{pokemon}\":\"https://assets.pokemon.com/assets/cms2/img/pokedex/detail/#{pokemon_list[pokemon]['Number']}.png\""
+  pokemon = "\"#{pokemon}\":\"https://assets.pokemon.com/assets/cms2/img/pokedex/detail/#{pokemon_list[pokemon]['Number']}.png\""
 end
 
 def matched_pokemons(text, terms)
-  terms.select { |term| text.downcase.match(term.downcase)}
+  terms.select { |term| text.downcase.match(term.downcase)}.uniq
 end
-
-EM.schedule do
-  tracked_terms = all_pokemon.keys.sample(10)
-
-  TweetStream::Client.new.track(*tracked_terms) do |tweet|
-    connections.each do |out|
-      if !tweet.retweet? && tweet.lang == 'en'
-        out << stream_message(tweet, tracked_terms)
-      end
-    end
-  end
-end
-
-# twitter_client.track.options[:params][:track]

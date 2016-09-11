@@ -1,6 +1,6 @@
 !!! 5
 %html
-  %link{rel: "stylesheet", type: "text/css", href: "https://fonts.googleapis.com/css?family=Bangers"}
+  %link{rel: "stylesheet", type: "text/css", href: "https://fonts.googleapis.com/css?family=Bangers|Oswald"}
   %link{rel: "stylesheet", type: "text/css", href: "https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css"}
   %link{rel: "stylesheet", type: "text/css", href: "https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.3/css/selectize.min.css"}
   %link{rel: "stylesheet", type: "text/css", href: "index.css"} 
@@ -16,12 +16,10 @@
         .pokemongo-nav
           Pokemon Go #Tweets
       #search
-        %form{action: "/tweets", method: "get"}
-          %select{:name => 'pokemon[]',  class: 'choose-pokemon', multiple: true}
+        %form{action: "/", method: "get"}
+          %select{:name => 'pokemon[]',  class: 'choose-pokemon', multiple: true, placeholder: 'select pokemon to show'}
             - @pokemon.each do |p|
               %option{ value: p }= p
-
-          %input{ type:"submit", name: "submit", value: "search" }
       %hr
     #pokeballs 
     #sidebar
