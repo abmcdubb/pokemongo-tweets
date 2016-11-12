@@ -6,9 +6,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
   createGrid()
   $('.choose-pokemon').selectize({maxItems: 40});
   
-  $( ".selectize-input").focusout(function() { 
+  $('.selectize-input').focusout(function() { 
     getFormInput()  
-  })
+  });
 
   source.onmessage = function(event) {
     console.log(event.data);
@@ -18,8 +18,20 @@ document.addEventListener("DOMContentLoaded", function(event) {
       showPokemon(data);
     }
   };
+});
 
-})
+$(document).ready(function() {
+  console.log( "ready!" );
+
+  $('.gridbox').hover(function() {
+    console.log('hi')
+  })
+  
+});
+
+
+
+
 
 function pokemonShow(tweet) {
   if (selectedPokemon.length == 0) {

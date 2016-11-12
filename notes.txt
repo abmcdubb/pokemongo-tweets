@@ -10,3 +10,5 @@ TODO:
 - add params to url
 - loading screen
 - disconnect message
+- clear screen on filter
+- add pokmemon as class name
