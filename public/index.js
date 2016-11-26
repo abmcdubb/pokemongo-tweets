@@ -1,37 +1,172 @@
 var source = new EventSource('/tweets');
-var fullPokemonGridsBoxes = []
+var tweetManager = {};
 var selectedPokemon = []
+var fullPokemonGridsBoxes = []
 
-document.addEventListener("DOMContentLoaded", function(event) {
-  createGrid()
-  $('.choose-pokemon').selectize({maxItems: 40});
+tweetManager.activePokemon = {};
+
+tweetManager.randomNum = function (length) {
+  return Math.floor(Math.random() * length)
+}
+
+tweetManager.generateRange = function(maxNum) {
+  return Array.apply(0, Array(maxNum))
+    .map(function (element, index){
+      return index + 1;
+   })
+}
+
+tweetManager.randomColorGenerator = function () {
+  colors = randomColor({count: 27, hue: "blue"});
+  return colors[ tweetManager.randomNum(colors.length) ];
+}
+
+tweetManager.managePokeballs = function (element, isInitialized, context) {
+  if (!isInitialized) return;
+
+  parentDiv = element.parentElement
+  elementKey = parseInt(parentDiv.id.replace('box', ''))
+  pokemon = tweetManager.vm.activeList[elementKey]
+  img = element.getElementsByTagName('img')[0];
+
+  if (!parentDiv.classList.contains('empty') && typeof pokemon === 'undefined') {
+    removePokeball()
+  }
+  if (parentDiv.classList.contains('empty') && typeof pokemon != 'undefined') {
+    addPokeball() 
+  }
   
-  $('.selectize-input').focusout(function() { 
-    getFormInput()  
-  });
+  function addPokeball() {
+    element.classList.add(pokemon.id()) //' animated bounceInLeft';
+    parentDiv.classList.remove('empty')
+    element.style.backgroundColor = pokemon.color();
+    img.classList.add(pokemon.id());
+    img.src = pokemon.imageSrc();
+    addToLeaderBoard()
+  }
+  function removePokeball() {
+    element.classList = 'pokeball';
+    parentDiv.classList.add('empty');
+    element.style.backgroundColor = 'transparent';
+    img.classList = 'pokemon-image';
+    img.src = '';
+    removeFromLeaderBoard()
+  }
+  function addToLeaderBoard() {
+    tweetStream = document.querySelector('#tweet-stream');
+    paragraph = document.createElement('p');
+    paragraph.className = 'tweet-text'  + ' ' + pokemon.id();
+    newText = document.createTextNode(pokemon.text());
+    paragraph.appendChild(newText);
+    tweetStream.insertBefore(paragraph, tweetStream.firstChild);
+  }
+  function removeFromLeaderBoard() {
+    leaderBoard = document.getElementById('tweet-stream');
+    oldestTweet = leaderBoard.lastChild;
+    leaderBoard.removeChild(oldestTweet);
+  }
+}
+
+tweetManager.rowNum = 6;
+tweetManager.columnNum = 6;
+tweetManager.totalBoxes = tweetManager.rowNum * tweetManager.columnNum
+tweetManager.randomColor = tweetManager.randomColorGenerator();
+
+
+tweetManager.pokeBall = function(data) {
+  var key = Object.keys(data.pokemons)[0];
+  var imageSrc = data.pokemons[key];
+
+  this.id = m.prop(data.id);
+  this.text = m.prop(data.message);
+  this.imageSrc = m.prop(imageSrc)
+  this.color = m.prop(tweetManager.randomColorGenerator())
+}
+
+tweetManager.emptyDivs = tweetManager.generateRange(tweetManager.totalBoxes);
+tweetManager.fullDivs = [];
+
+tweetManager.vm = (function() { 
+  var vm = {}
+  vm.init = function() {
+    vm.activeList = {}
+
+    vm.add = function(data) {
+      fullPokemonGridsBoxes.push(data.id)
+      if (tweetManager.emptyDivs.length < 2) {
+        emptyDiv()
+      }
+      tweetManager.vm.activeList[getEmptyDiv()] = new tweetManager.pokeBall(data); 
+      m.redraw()
+    };
+
+    function emptyDiv() {
+      firstEl = tweetManager.fullDivs.shift()
+      tweetManager.emptyDivs.push(firstEl)
+
+      el = tweetManager.vm.activeList[firstEl]
+      elIndex = fullPokemonGridsBoxes.indexOf(el.id())
+      fullPokemonGridsBoxes.splice(elIndex, 1);
+      delete tweetManager.vm.activeList[firstEl]
+    }
+
+    function getEmptyDiv() {
+      var randomDiv = tweetManager.emptyDivs[ tweetManager.randomNum(tweetManager.emptyDivs.length) ]
+      var randomDivIndex = tweetManager.emptyDivs.indexOf(randomDiv)
+      tweetManager.fullDivs.push(tweetManager.emptyDivs.splice(randomDivIndex, 1)[0])      
+
+      return randomDiv
+    }
+  }
+  return vm
+}())
+
+
+tweetManager.controller = function() {
+  tweetManager.vm.init();
+  m.redraw.strategy("all")
+}
+
+tweetManager.view = function() {
+  var num = 1
+  var rowArr = tweetManager.generateRange(tweetManager.rowNum)
+  var columnArr = tweetManager.generateRange(tweetManager.columnNum)
+  return [ m('#pokeballs', [
+    [ rowArr.map(function(rNum) {
+      return m('.row.row' + rNum, [
+        columnArr.map(function(cNum) {
+          return m('.gridbox.empty#box' + num++, [
+            m('.pokeball', { config: tweetManager.managePokeballs }, [
+              m('img.pokemon-image')
+              ]
+            )
+          ]);
+        })
+      ]);
+    })]
+  ]),
+  [ m('#sidebar', [
+      m('#leaderboard-header', 'Tweet Stream'),
+      m('#leaderboard', [
+        m('#tweet-stream')
+      ])
+    ])]
+  ]
+};
+
+document.addEventListener('DOMContentLoaded', function(event) {
+  $('.choose-pokemon').selectize({maxItems: 40});
+  $('.selectize-input').focusout(function() { getFormInput() });
+  m.mount(document.getElementById('main'), {controller: tweetManager.controller, view: tweetManager.view});
 
   source.onmessage = function(event) {
-    console.log(event.data);
     data = JSON.parse(event.data);
-
     if (fullPokemonGridsBoxes.indexOf(data.id) == -1 && pokemonShow(data)) {
-      showPokemon(data);
+      console.log(event.data);
+      new tweetManager.vm.add(data);
     }
   };
 });
-
-$(document).ready(function() {
-  console.log( "ready!" );
-
-  $('.gridbox').hover(function() {
-    console.log('hi')
-  })
-  
-});
-
-
-
-
 
 function pokemonShow(tweet) {
   if (selectedPokemon.length == 0) {
@@ -39,7 +174,6 @@ function pokemonShow(tweet) {
   }
   else  {
     result = containsAny(Object.keys(tweet.pokemons))
-    console.log(result)
     return result.length > 0
   }
 }
@@ -49,127 +183,10 @@ function containsAny(tweetedPokemons) {
   return result
 }
 
-function createGrid() {
-  var pokeballsContainer = document.querySelector('#pokeballs')
-
-  width = pokeballsContainer.offsetWidth;
-  // height = window.innerHeight;
-
-  columns = Math.floor(width / 100);
-  // rows = Math.floor(height / 150);
-  rows = 6
-
-  for (var r = 0; r < rows; r++ ) {
-    parentDiv = document.createElement('div');
-    parentDiv.className = 'row'
-    parentDiv.className += " row" + r 
-
-    for (var c = 0; c < columns; c++) {
-      childDiv = document.createElement('div');
-      childDiv.className = "column" + c
-      childDiv.className += ' gridbox'
-      childDiv.className += ' empty'
-
-      parentDiv.appendChild(childDiv);
-    };
-
-    
-    pokeballsContainer.appendChild(parentDiv, pokeballsContainer);
-  }
-  // set leaderboard height
-  leaderboard = document.querySelector('#leaderboard')
-  leaderboard.style.height = pokeballsContainer.offsetHeight + "px"
-
-  // story total number of pokemon grid boxes
-  totalGridBoxes = rows * columns
-}
-
 function getFormInput() {
   inputItems = $('.item') //be more specific
-    for(i = 0; i < inputItems.length ; i++) {
-      selectedPokemon.push($(inputItems[i]).data('value'))
-    }
+  for(i = 0; i < inputItems.length ; i++) {
+    selectedPokemon.push($(inputItems[i]).data('value'))
+  }
   console.log(selectedPokemon)
 }
-
-function showPokemon(tweet) {
-  emptyGrids = document.getElementsByClassName('gridbox empty');
-
-  if (emptyGrids.length > 0) {
-    var randomColor = randomColorGenerator();
-    var pokeball = createPokeball(tweet, randomColor);
-    var image = getImage(tweet);
-    var randomGrid = emptyGrids[ Math.floor(Math.random() * emptyGrids.length) ];
-
-    randomGrid.appendChild(pokeball, randomGrid);
-    pokeball.appendChild(image, pokeball);
-
-    randomGrid.classList.remove("empty");
-
-    addToLeaderboard(tweet, randomColor);
-
-    if (emptyGrids.length <= 1) {
-      removePokemon()
-    }
-  }
-}
-
-function removePokemon() {
-  classToRemove = fullPokemonGridsBoxes.shift();
-  
-  var pokeballToRemove = document.querySelector("." + classToRemove + '.pokeball');
-  var imageToRemove = document.querySelector("." + classToRemove + '.pokemon-image');
-  var tweetToRemove = document.querySelector("." + classToRemove + '.tweet-text');
-
-  // pokeballToRemove.classList.remove('bounceInLeft')
-  // pokeballToRemove.classList.add('fadeOutDownBig')
-
-  // pokeballToRemove.addEventListener("webkitTransitionEnd", function()
-  //   { 
-  //     debugger
-      tweetToRemove.parentNode.removeChild(tweetToRemove)
-      imageToRemove.parentNode.removeChild(imageToRemove)
-      pokeballToRemove.parentNode.classList.add('empty')
-      pokeballToRemove.parentNode.removeChild(pokeballToRemove)
-  //   }
-  // ); 
-}
-
-function addToLeaderboard (tweet, color) {
-  tweetStream = document.querySelector('#tweet-stream')
-
-  paragraph = document.createElement('p');
-  paragraph.className = 'tweet-text'  + ' ' + tweet.id
-  newText = document.createTextNode(tweet.message);
-  paragraph.appendChild(newText);
-
-  tweetStream.insertBefore(paragraph, tweetStream.firstChild);
-}
-
-function randomColorGenerator() {
-  colors = randomColor({count: 27, hue: "blue"});
-  return colors[ Math.floor(Math.random() * colors.length) ];
-}
-
-function createPokeball(tweet, color) {
-  div = document.createElement('div');
-  div.className = 'pokeball' + ' ' + tweet.id + ' animated bounceInLeft';
-  div.style.backgroundColor = color;
-
-  fullPokemonGridsBoxes.push(tweet.id)
-
-  return div
-}
-
-function getImage(tweet) {
-  var key = Object.keys(tweet.pokemons)[0];
-  var imageSrc = tweet.pokemons[key];
-
-  image = document.createElement('img');
-  image.className = 'pokemon-image' + ' ' + tweet.id;
-  image.src = imageSrc;
-
-  return image
-}
-
-
