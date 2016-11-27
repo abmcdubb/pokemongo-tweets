@@ -1,21 +1,28 @@
 body {
   padding: 0 50px;
 }
-.pokeball {
-  border-radius: 50px;
-  height: 75px;
-  width: 75px;
-  color: white;
-  font-size: 13px;
-  /*animation-duration: 2s;*/
-  /*animation-delay: 1s;*/
-  /*animation-iteration-count: infinite;*/
-}
 .gridbox {
-  height: 75px;
-  width: 75px;
+  height: 100px;
+  width: 100px;
   display: inline-block;
   padding: 10px;
+}
+.pokeball {
+  border-radius: 50%;
+  height: 75px;
+  width: 75px;
+  float: right;
+}
+.pokeball.shown {
+  animation: showPokeball 3s ease-out 0s 1 alternate;
+}
+.pokeball.empty {
+  opacity: 0;
+  transform: scale(0);
+  transition: opacity 3s, transform 2s;
+}
+.pokemon-image.shown {
+  animation: showPokemonImage 2s ease-out 0s 1 alternate;
 }
 .pokemon-image {
   display: inline-block;
@@ -23,7 +30,7 @@ body {
   margin-left: -20px;
   margin-top: 25px;
 }
-.nav {
+#nav {
   margin: 25px 0;
 }
 #logo {
@@ -66,12 +73,12 @@ p.tweet-text {
   padding: 5px;
   border-bottom: 2px solid black;
   font-family: 'Bangers', cursive;
+  height: auto;
+  animation: showText 1s linear 0s 1 alternate;
 }
-
 .selectize-control.choose-pokemon {
   font-family: 'Oswald', sans-serif;
 }
-
 .selectize-input.items>div.item {
   font-family: 'Oswald', sans-serif;
   border-radius: 5px;
@@ -80,4 +87,22 @@ p.tweet-text {
   font-style: thin;
   color: white;
   background-color: black;
+}
+@keyframes showPokeball {
+  0%   {transform: scale(.2); opacity: .2;}
+  15%  {transform: scale(.4); opacity: .3}
+  30%  {transform: scale(.6); opacity: .4}
+  45%  {transform: scale(.8); opacity: .5}
+  60%  {transform: scale(1); opacity: .6}
+  75%  {transform: scale(1.2); opacity: .7}
+  90%  {transform: scale(1.1); opacity: .8}
+  100% {transform: scale(1); opacity: .9}
+}
+@keyframes showPokemonImage {
+  0% {transform: translateX(75px)}
+  100% {transform: translateX(0px)}
+}
+@keyframes showText {
+  from {border-bottom: 0px solid transparent; opacity: 0;}
+  to {height: auto;}
 }
